@@ -6,6 +6,9 @@ const Task = require("../models/Task.js");
 router.post("/create", async(req, res) => {
     try {
         const task = await Task.create(req.body);
+        if (!req.body.title) {
+            return res.status(400).send({ message: "Title is required" });
+        }
         res.status(201).send(task);
     } catch (error) {
         console.error(error);
@@ -18,7 +21,7 @@ router.post("/create", async(req, res) => {
 router.get("/", async(req,res) => {
     try {
         const tasks = await Task.find(); // Fetch all tasks from the database
-        res.status(201).send(tasks);
+        res.status(200).send(tasks);
     } catch (error) {
         console.error(error);
         res
@@ -33,7 +36,60 @@ router.get("/id/:_id", async(req,res) => {
         if (!task) {
             return res.status(404).send({ message: "The task with the provided id does not exist" })
         }
-        res.status(201).send(task);
+        res.status(200).send(task);
+    } catch (error) {
+        console.error(error);
+        res
+            .status(500)
+            .send({ message: "An error occurred while fetching the task" });
+    }
+})
+
+
+router.put("/markAsCompleted/:_id", async(req,res) => {
+    try {
+        const task = await Task.findByIdAndUpdate(req.params._id, // Use the ID from the URL
+            { completed: true }, // Update the `completed` field to true
+            { new: true } // Return the updated task
+            );
+        if (!task) {
+            return res.status(404).send({ message: "The task with the provided id does not exist" })
+        }
+        res.status(200).send(task);
+    } catch (error) {
+        console.error(error);
+        res
+            .status(500)
+            .send({ message: "An error occurred while fetching the task" });
+    }
+})
+
+
+router.put("/id/:_id", async(req,res) => {
+    try {
+        const task = await Task.findByIdAndUpdate(req.params._id, // Use the ID from the URL
+            { title: req.body.title },  // Update only the title
+            { new: true }  // Return the updated document
+            );
+        if (!task) {
+            return res.status(404).send({ message: "The task with the provided id does not exist" })
+        }
+        res.status(200).send(task);
+    } catch (error) {
+        console.error(error);
+        res
+            .status(500)
+            .send({ message: "An error occurred while fetching the task" });
+    }
+})
+
+router.delete("/id/:_id", async(req,res) => {
+    try {
+        const task = await Task.findByIdAndDelete(req.params._id);
+        if (!task) {
+            return res.status(404).send({ message: "The task with the provided id does not exist" })
+        }
+        res.status(200).send(task);
     } catch (error) {
         console.error(error);
         res

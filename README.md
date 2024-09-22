@@ -14,12 +14,12 @@ La estructura será la siguiente:
 - index.js // Añadiremos nuestro servidor, conexión a la base de datos y uniremos el resto de la aplicación  //DONE
 
 ## Endpoints de la API
-- POST /create: Endpoint para crear una tarea.
-- GET /: Endpoint para traer todas las tareas.
-- GET /id/:_id: Endpoint para buscar tarea por id.
-- PUT /markAsCompleted/:_id: Endpoint para marcar una tarea como completada.
-- PUT /id/:_id: Endpoint para actualizar una tarea y que solo se pueda cambiar el título de la tarea. Es decir, que no me deje cambiar el campo  “completed” desde este endpoint, sino solo, el título.
-- DELETE /id/:_id: Endpoint para eliminar una tarea.
+- POST /create: Endpoint para crear una tarea. //DONE
+- GET /: Endpoint para traer todas las tareas.  //DONE
+- GET /id/:_id: Endpoint para buscar tarea por id.  //DONE
+- PUT /markAsCompleted/:_id: Endpoint para marcar una tarea como completada. //DONE
+- PUT /id/:_id: Endpoint para actualizar una tarea y que solo se pueda cambiar el título de la tarea. Es decir, que no me deje cambiar el campo  “completed” desde este endpoint, sino solo, el título. //DONE
+- DELETE /id/:_id: Endpoint para eliminar una tarea.  //DONE
 
 
 1. Configuración
