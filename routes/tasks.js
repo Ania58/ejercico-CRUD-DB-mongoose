@@ -49,8 +49,8 @@ router.get("/id/:_id", async(req,res) => {
 router.put("/markAsCompleted/:_id", async(req,res) => {
     try {
         const task = await Task.findByIdAndUpdate(req.params._id, // Use the ID from the URL
-            { completed: true }, // Update the `completed` field to true
-            { new: true } // Return the updated task
+            { completed: req.body.completed }, // Update the `completed` field to true (or false; depending on the input)
+            { new: true, runValidators: true } // Return the updated task
             );
         if (!task) {
             return res.status(404).send({ message: "The task with the provided id does not exist" })
@@ -71,6 +71,7 @@ router.put("/id/:_id", async(req,res) => {
             { title: req.body.title },  // Update only the title
             { new: true }  // Return the updated document
             );
+            console.log(task)
         if (!task) {
             return res.status(404).send({ message: "The task with the provided id does not exist" })
         }
